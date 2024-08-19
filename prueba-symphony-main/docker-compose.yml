@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  pruebasymphonymain:
+    image: pruebasymphonymain
+    build:
+      context: .
+      dockerfile: ./Dockerfile

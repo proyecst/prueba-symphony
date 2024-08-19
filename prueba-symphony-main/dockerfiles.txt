@@ -1,0 +1,24 @@
+# Use a PHP image with FPM and necessary extensions
+FROM php:8.2-fpm-alpine
+
+# Install additional dependencies (e.g., zip, unzip)
+RUN apk add --no-cache zip unzip
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy composer.json and composer.lock for dependency management
+COPY composer.json composer.lock ./
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the PHP-FPM port
+EXPOSE 9000
+
+# Set environment variables (optional)
+ENV PHP_INI_DIR /usr/local/etc/php
+
+# Configure PHP-FPM (optional)
+COPY php.ini /usr/local/etc/php/php.ini
